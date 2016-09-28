@@ -15,21 +15,41 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'uiGmapgoogle-maps'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, uiGmapGoogleMapApiProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
-      .otherwise({
+      });
+    $routeProvider.when('/bar/:barKey', {
+      templateUrl: 'views/bar.html',
+      controller: 'BarCtrl'
+    })
+    $routeProvider.otherwise({
         redirectTo: '/'
       });
-  });
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyAWY0lgrvw957CTrzmz0MEAKNGDyqwBDx8',
+        libraries: 'weather,geometry,visualization'
+    });
+  })
+  .run(['$rootScope', '$location', '$q', function($rootScope, $location, $q){
+    var path = function() { return $location.path();};
+    $rootScope.$watch(path, function(newVal){
+      $rootScope.activetab = newVal;
+    });
+    $rootScope.userlocation = null;
+    if (navigator.geolocation) {
+      var q = $q.defer();
+      $rootScope.userlocation = q.promise;
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        var pos = { 'lat' : pos.coords.latitude, 'lng' : pos.coords.longitude };
+        q.resolve(pos);
+        $rootScope.userlocation = pos;
+      });
+    }
+  }]);

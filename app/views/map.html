@@ -1,0 +1,15 @@
+<div>
+<ui-gmap-google-map center='map.center' zoom='map.zoom' control="map.control">
+  <ui-gmap-markers models="map.bars" coords="'self'" icon="'icon'" events="map.markersEvents">
+  </ui-gmap-markers>
+  <ui-gmap-marker
+        idKey='-1'
+        coords='map.userlocation'
+        options='map.userLocationOptions'
+        ng-if="map.userlocation">
+  </ui-gmap-marker>
+</ui-gmap-google-map>
+<ul class="nav nav-pills nav-stacked">
+  <li role="presentation" ng-repeat="bar in bars" ng-class="{active: activetab == bar.url}"><a ng-href="#{{bar.url}}">{{bar.title}}</a></li>
+</ul>
+</div>
