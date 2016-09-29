@@ -37,15 +37,14 @@ angular
         libraries: 'weather,geometry,visualization'
     });
   })
-  .run(['$rootScope', '$location', '$q', function($rootScope, $location, $q){
+  .run(['$rootScope', '$location', '$q', function($rootScope, $location, $q) {
     var path = function() { return $location.path();};
     $rootScope.$watch(path, function(newVal){
       $rootScope.activetab = newVal;
     });
-    $rootScope.userlocation = null;
+    var q = $q.defer();
+    $rootScope.userlocation = q.promise;
     if (navigator.geolocation) {
-      var q = $q.defer();
-      $rootScope.userlocation = q.promise;
       navigator.geolocation.getCurrentPosition(function(pos) {
         var pos = { 'lat' : pos.coords.latitude, 'lng' : pos.coords.longitude };
         q.resolve(pos);

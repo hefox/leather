@@ -33,6 +33,17 @@ angular.module('leatherApp')
           'other' : 'images/lingerie.png',
           'bathhouse': 'images/zipper.png'
         };
+        var path = function() { return $location.path();};
+        var prevKey, prevIcon = null;
+        $scope.$watch(path, function(newVal){
+          var barkey = newVal.replace('\/bar\/', '');
+          if (barkey in $scope.bars) {
+            if (prevKey) $scope.bars[prevKey].icon = prevIcon;
+            prevKey = barkey;
+            prevIcon = $scope.bars[barkey].icon;
+            $scope.bars[barkey].icon = 'images/star-3.png';
+          }
+        });
         for (var key in $scope.bars) {
           if ($scope.bars[key].latitude) {
             $scope.bars[key].id = i++;
@@ -41,6 +52,7 @@ angular.module('leatherApp')
             $scope.map.bars.push($scope.bars[key]);
           }
         }
+        $scope.map.bars.sort(function(a, b) { return b.latitude - a.latitude});
         var path = function() { return $location.path();};
         $scope.$watch(path, function(newVal){
           $scope.activetab = newVal;
