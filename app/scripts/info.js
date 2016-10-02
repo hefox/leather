@@ -127,7 +127,7 @@ function LeatherBars() {
       address: '399 4th St, San Francisco, CA 94107',
     },
     'ritch' : {
-      title: 'The Ritch Street Baths',
+      title: 'The Ritch Street Health Club',
       latitude: 37.77886,
       longitude: -122.39383,
       address: '330 Ritch St, San Francisco, CA 94107',
@@ -182,7 +182,7 @@ function LeatherBars() {
       address: '973 Harrison St, San Francisco, CA 94107',
       type: 'bathhouse',
     },
-    'Animals' : {
+    'animals' : {
       title: 'Animals',
       latitude: 37.78037,
       longitude: -122.40767,
