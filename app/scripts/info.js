@@ -232,7 +232,7 @@ function LeatherBars() {
       type: 'other',
     },
     'taste' : {
-      title: 'A Taste of Leather',
+      title: 'A Taste of Leather / Trading Post Emporium',
       latitude: 37.77931,
       longitude: -122.40488,
       address: '960 Folsom St, San Francisco, CA 94107',
@@ -251,6 +251,12 @@ function LeatherBars() {
       longitude: -122.40954,
       address: 'Ringold St, San Francisco, CA 94103',
       type: 'other',
+    },
+    'eagle' : {
+      title: 'SF Eagle',
+      latitude: 37.76997,
+      longitude: -122.41338,
+      address: '398 12th Street'
     },
   };
   this.getBars = function() {return this.info;};
