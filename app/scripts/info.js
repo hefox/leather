@@ -49,13 +49,13 @@ function LeatherBars() {
       address: '1347 Folsom St, San Francisco, CA 94103',
     },
     'arena' : {
-      title: 'The Arena (1978 - 1983), the Stud (1987-open?)',
+      title: 'The Arena, the Stud',
       latitude: 37.77282,
       longitude: -122.41,
       address: '399 9th St, San Francisco, CA 94103',
     },
     'lonestarorg' : {
-      title: 'The Lone Star (original location)',
+      title: 'The Lone Star',
       latitude: 37.77826,
       longitude: -122.40942,
       address: '1098 Howard St, San Francisco, CA 94103',
@@ -70,7 +70,7 @@ function LeatherBars() {
       title: 'The Red Star Saloon (1974)/ Watering Hole',
       latitude: 37.77577,
       longitude: -122.40875,
-      address: '',
+      address: '1145 Folsom Street, San Francisco, CA 94103',
     },
     'bootcamp' : {
       title: 'Bootcamp',
@@ -148,7 +148,7 @@ function LeatherBars() {
       type: 'bathhouse',
     },
     'cauldron' : {
-      title: 'The Cauldron',
+      title: 'The Caldron',
       latitude: 37.77382,
       longitude: -122.41506,
       address: '953 Natoma St, San Francisco, CA 94103',
@@ -257,6 +257,12 @@ function LeatherBars() {
       latitude: 37.76997,
       longitude: -122.41338,
       address: '398 12th Street'
+    },
+    'wow' : {
+      title: 'Worn Out West',
+      latitude: 37.777146,
+      longitude: -122.41086,
+      address: '1158 Howard St, San Francisco, CA 94103'
     },
   };
   this.getBars = function() {return this.info;};
