@@ -92,8 +92,12 @@ body {
 
 .angular-google-map-container { height: 200px; }
 
-.leather-map__wrapper.col-md-8 .angular-google-map-container{
+.leather-map__wrapper.col-md-12 .angular-google-map-container{
   height: 400px;
+
+}
+.leather-map__wrapper.col-md-12  {
+  padding-bottom: 20px;
 }
 
 .img-bar {

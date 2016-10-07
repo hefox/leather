@@ -12,7 +12,7 @@
         >
   </ui-gmap-polyline>
 </ui-gmap-google-map>
-<ul class="nav nav-pills nav-stacked">
+<ul class="nav nav-pills" ng-class="{'nav-stacked': displayList}">
   <li role="presentation" ng-repeat="bar in map.bars" ng-class="{active: activetab == bar.url}">
   <a ng-href="#{{bar.url}}"><img ng-src="{{bar.icon}}" class="map-list-icon"> {{bar.title}}</a></li>
 </ul>

@@ -47,18 +47,23 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div ng-class="activetab == '/' ? 'col-md-4' : 'col-md-8'">
-          <div ng-view=""></div>
+        <div ng-class="activetab == '/' ? 'col-md-12' : 'col-md-8'">
+          <div ng-view="" autoscroll="true"></div>
         </div>
-        <div class="leather-map__wrapper" ng-class="activetab == '/' ? 'col-md-8' : 'col-md-4'">
-          <leather-map></leather-map>
+        <div class="leather-map__wrapper col-md-4" ng-if="activetab != '/'">
+          <leather-map display-list="true"></leather-map>
+        </div>
+      </div>
+      <div class="row"  ng-if="activetab == '/'">
+        <div class="leather-map__wrapper col-md-12">
+          <leather-map display-list="false" map-zoom="15"></leather-map>
         </div>
       </div>
     </div>
 
     <div class="footer">
       <div class="container">
-        None of the content on this site is owned by site creator -- it's mostly quotes for educational purposes. Don't sue me if didn't cite or reference sources correctly!
+          <p>Under construction, a lot was jotted as notes so still need proper references added and other cleanup. None of the content on this site is owned by site creator -- it's mostly quotes for educational purposes. Don't sue me if didn't cite or reference sources correctly!</p>
       </div>
     </div>
 

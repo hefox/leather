@@ -264,6 +264,13 @@ function LeatherBars() {
       longitude: -122.41086,
       address: '1158 Howard St, San Francisco, CA 94103'
     },
+    'mrs' : {
+      title: 'Mr. S Leather',
+      latitude: 37.774125,
+      longitude:  -122.408661,
+      type: 'other',
+      address: '385 8th St, San Francisco, CA 94103'
+    },
   };
   this.getBars = function() {return this.info;};
   this.getBar = function(key) {return this.info[key];};

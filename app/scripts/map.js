@@ -12,13 +12,18 @@ angular.module('leatherApp')
     return {
       restrict: 'E',
       transclude: true,
-      scope: {},
+      scope: {
+        displayList: "=",
+        mapZoom: "=",
+      },
       controller: function ($scope, $location, $rootScope, uiGmapIsReady) {
         $scope.map = {
           control : {},
           userLocationOptions: {icon: 'images/smiley_happy.png'},
-          center: { latitude: 37.778538, longitude: -122.405731 },
-          zoom: 13,
+          center: {
+           latitude: 37.77577,
+           longitude: -122.40875,},
+          zoom: $scope.mapZoom || 14,
           markersEvents: {
             click: function(marker, eventName, model, args) {
               $location.path(model.url);
@@ -33,7 +38,7 @@ angular.module('leatherApp')
           $scope.bars['handball'],
           {latitude: 37.77729, longitude: -122.40408},
           {latitude: 37.77851, longitude: -122.40564},
-          {latitude:37.77896, longitude: -122.40507},//slot
+          {latitude: 37.77896, longitude: -122.40507},//slot
           {latitude: 37.77851, longitude: -122.40564},
           {latitude: 37.77933, longitude: -122.40664}, // mr b
           {latitude: 37.77851, longitude: -122.40564},
@@ -70,6 +75,7 @@ angular.module('leatherApp')
             prevKey = barkey;
             prevIcon = $scope.bars[barkey].icon;
             $scope.bars[barkey].icon = 'images/star-3.png';
+            $scope.barkey = barkey;
           }
         });
         for (var key in $scope.bars) {
@@ -84,10 +90,8 @@ angular.module('leatherApp')
         var path = function() { return $location.path();};
         $scope.$watch(path, function(newVal){
           $scope.activetab = newVal;
-          if ($scope.activetab == '/') {
-            $scope.map.zoom = 14;
-          }
         });
+        $scope.dontmove = true;
         uiGmapIsReady.promise()
         .then(function (map_instances) {
           $scope.gmap = $scope.map.control.getGMap();
@@ -99,9 +103,20 @@ angular.module('leatherApp')
                 $scope.gmap.setZoom(17);
                 $scope.map.userlocation = {latitude: $rootScope.userlocation.lat, longitude: $rootScope.userlocation.lng};
               }
+              else {
+                $scope.dontmove = false;
+              }
             });
           }
+          else {
+            $scope.dontmove = false;
+          }
         });
+        $scope.$watch('dontmove+barkey', function(val) {
+          if (!$scope.dontmove && $scope.barkey) {
+            $scope.map.control.refresh($scope.bars[$scope.barkey]);
+          }
+        })
       },
       templateUrl: 'views/map.html',
       replace: true
