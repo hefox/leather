@@ -92,6 +92,10 @@ body {
 
 .angular-google-map-container { height: 200px; }
 
+.leather-map__wrapper.col-md-8 .angular-google-map-container{
+  height: 400px;
+}
+
 .img-bar {
   padding: 5px;
   border-radius: 5px;

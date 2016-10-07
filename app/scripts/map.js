@@ -27,6 +27,34 @@ angular.module('leatherApp')
         };
         var bars = new LeatherBars();
         $scope.bars = bars.getBars();
+        $scope.map.route = [
+          {latitude: 37.78095, longitude: -122.39982},
+          {latitude: 37.78078, longitude: -122.3996},
+          $scope.bars['handball'],
+          {latitude: 37.77729, longitude: -122.40408},
+          {latitude: 37.77851, longitude: -122.40564},
+          {latitude:37.77896, longitude: -122.40507},//slot
+          {latitude: 37.77851, longitude: -122.40564},
+          {latitude: 37.77933, longitude: -122.40664}, // mr b
+          {latitude: 37.77851, longitude: -122.40564},
+          {latitude: 37.77589, longitude: -122.40893},
+          {latitude: 37.77501, longitude: -122.41008},
+          $scope.bars['blackblue'],
+          {latitude: 37.77501, longitude: -122.41008},
+          $scope.bars['driftwood'],
+          {latitude: 37.77501, longitude: -122.41008},
+          $scope.bars['ringold'],
+          {latitude: 37.77378, longitude: -122.40855},
+          $scope.bars['arena'],
+          $scope.bars['ambush'],
+          {latitude: 37.77163, longitude: -122.41137},
+          {latitude: 37.77282, longitude: -122.41282},
+          {latitude: 37.77196, longitude: -122.4141},
+          $scope.bars['oasis'],
+          {latitude: 37.77196, longitude: -122.4141},
+          {latitude: 37.77094, longitude: -122.41496},
+          $scope.bars['eagle'],
+        ];
         $scope.map.bars = [];
         var i =0;
         var icons = {
@@ -56,18 +84,23 @@ angular.module('leatherApp')
         var path = function() { return $location.path();};
         $scope.$watch(path, function(newVal){
           $scope.activetab = newVal;
+          if ($scope.activetab == '/') {
+            $scope.map.zoom = 14;
+          }
         });
         uiGmapIsReady.promise()
         .then(function (map_instances) {
           $scope.gmap = $scope.map.control.getGMap();
-          $rootScope.userlocation.then(function() {
-            var latLng = new google.maps.LatLng($rootScope.userlocation);
-            if ($scope.gmap.getBounds().contains(latLng)) {
-              $scope.gmap.setCenter(latLng);
-              $scope.gmap.setZoom(17);
-              $scope.map.userlocation = {latitude: $rootScope.userlocation.lat, longitude: $rootScope.userlocation.lng};
-            }
-          });
+          if ($rootScope.userlocation && $rootScope.userlocation.then) {
+            $rootScope.userlocation.then(function() {
+              var latLng = new google.maps.LatLng($rootScope.userlocation);
+              if ($scope.gmap.getBounds().contains(latLng)) {
+                $scope.gmap.setCenter(latLng);
+                $scope.gmap.setZoom(17);
+                $scope.map.userlocation = {latitude: $rootScope.userlocation.lat, longitude: $rootScope.userlocation.lng};
+              }
+            });
+          }
         });
       },
       templateUrl: 'views/map.html',

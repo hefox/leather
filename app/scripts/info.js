@@ -67,7 +67,7 @@ function LeatherBars() {
       address: '198 8th St, San Francisco, CA 94103',
     },
     'redstar' : {
-      title: 'The Red Star Saloon (1974)/ Watering Hole',
+      title: 'The Red Star Saloon, Watering Hole',
       latitude: 37.77577,
       longitude: -122.40875,
       address: '1145 Folsom Street, San Francisco, CA 94103',
