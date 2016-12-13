@@ -13,10 +13,10 @@ angular.module('leatherApp')
       restrict: 'E',
       transclude: true,
       scope: {
-        displayList: "=",
-        mapZoom: "=",
+        displayList: '=',
+        mapZoom: '=',
       },
-      controller: function ($scope, $location, $rootScope, uiGmapIsReady) {
+      controller: function ($scope, $location, $rootScope, uiGmapIsReady, barService, $window) {
         $scope.map = {
           control : {},
           userLocationOptions: {icon: 'images/smiley_happy.png'},
@@ -25,13 +25,12 @@ angular.module('leatherApp')
            longitude: -122.40875,},
           zoom: $scope.mapZoom || 14,
           markersEvents: {
-            click: function(marker, eventName, model, args) {
+            click: function(marker, eventName, model) {
               $location.path(model.url);
             }
           },
         };
-        var bars = new LeatherBars();
-        $scope.bars = bars.getBars();
+        $scope.bars = barService.getBars();
         $scope.map.route = [
           {latitude: 37.78095, longitude: -122.39982},
           {latitude: 37.78078, longitude: -122.3996},
@@ -71,11 +70,18 @@ angular.module('leatherApp')
         $scope.$watch(path, function(newVal){
           var barkey = newVal.replace('\/bar\/', '');
           if (barkey in $scope.bars) {
-            if (prevKey) $scope.bars[prevKey].icon = prevIcon;
+            if (prevKey) {
+              $scope.bars[prevKey].icon = prevIcon;
+              $scope.setDontmove(false);
+            }
             prevKey = barkey;
             prevIcon = $scope.bars[barkey].icon;
             $scope.bars[barkey].icon = 'images/star-3.png';
             $scope.barkey = barkey;
+            $window.document.title = $scope.bars[barkey].title;
+          }
+          else {
+            $window.document.title = 'Leather History Tour';
           }
         });
         for (var key in $scope.bars) {
@@ -86,14 +92,19 @@ angular.module('leatherApp')
             $scope.map.bars.push($scope.bars[key]);
           }
         }
-        $scope.map.bars.sort(function(a, b) { return b.latitude - a.latitude});
-        var path = function() { return $location.path();};
+        $scope.map.bars.sort(function(a, b) { return b.latitude - a.latitude;});
+        path = function() { return $location.path();};
         $scope.$watch(path, function(newVal){
           $scope.activetab = newVal;
         });
-        $scope.dontmove = true;
+        $scope.setDontmove = function(val) {
+          if (val !== undefined) {
+            $scope.dontmove = val;
+          }
+          return val;
+        };
         uiGmapIsReady.promise()
-        .then(function (map_instances) {
+        .then(function () {
           $scope.gmap = $scope.map.control.getGMap();
           if ($rootScope.userlocation && $rootScope.userlocation.then) {
             $rootScope.userlocation.then(function() {
@@ -104,19 +115,19 @@ angular.module('leatherApp')
                 $scope.map.userlocation = {latitude: $rootScope.userlocation.lat, longitude: $rootScope.userlocation.lng};
               }
               else {
-                $scope.dontmove = false;
+                $scope.setDontmove(false);
               }
             });
           }
           else {
-            $scope.dontmove = false;
+            $scope.setDontmove(false);
           }
+          $scope.$watch('dontmove+barkey', function() {
+            if (!$scope.dontmove && $scope.barkey) {
+              $scope.map.control.refresh($scope.bars[$scope.barkey]);
+            }
+          });
         });
-        $scope.$watch('dontmove+barkey', function(val) {
-          if (!$scope.dontmove && $scope.barkey) {
-            $scope.map.control.refresh($scope.bars[$scope.barkey]);
-          }
-        })
       },
       templateUrl: 'views/map.html',
       replace: true

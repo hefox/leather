@@ -8,9 +8,8 @@
  * Controller of the leatherApp
  */
 angular.module('leatherApp')
-  .controller('BarCtrl', function ($scope, $routeParams) {
+  .controller('BarCtrl', function ($scope, $routeParams, barService) {
     $scope.barKey = $routeParams.barKey;
-    var bars = new LeatherBars();
-    $scope.bar = bars.getBar($scope.barKey);
+    $scope.bar = barService.getBar($scope.barKey);
     $scope.barInclude = 'views/bar/' + $scope.barKey + '.html';
   });

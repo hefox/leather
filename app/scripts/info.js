@@ -3,6 +3,7 @@
 /**
  * information about leather bars
  */
+/*exported LeatherBars */
 
 function LeatherBars() {
   this.info = {
@@ -270,6 +271,20 @@ function LeatherBars() {
       longitude:  -122.408661,
       type: 'other',
       address: '385 8th St, San Francisco, CA 94103'
+    },
+    'church' : {
+      title: 'Church of St. Priapus',
+      latitude: 37.7749,
+      longitude: -122.41144,
+      type: 'bathhouse',
+      address: '746 Clementina St, San Francisco, CA 94103'
+    },
+    'fsb' : {
+      title: 'Jim Stewart\'s Place',
+      latitude: 37.774712,
+      longitude: -122.411793,
+      type: 'other',
+      address: '766 Clementina St, San Francisco, CA 94103'
     },
   };
   this.getBars = function() {return this.info;};

@@ -16,6 +16,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'components',
     'uiGmapgoogle-maps'
   ])
   .config(function ($routeProvider, uiGmapGoogleMapApiProvider) {
@@ -28,16 +29,17 @@ angular
     $routeProvider.when('/bar/:barKey', {
       templateUrl: 'views/bar.html',
       controller: 'BarCtrl'
-    })
+    });
     $routeProvider.otherwise({
-        redirectTo: '/'
-      });
+      redirectTo: '/'
+    });
     uiGmapGoogleMapApiProvider.configure({
         key: 'AIzaSyAWY0lgrvw957CTrzmz0MEAKNGDyqwBDx8',
         libraries: 'weather,geometry,visualization'
     });
   })
-  .run(['$rootScope', '$location', '$q', function($rootScope, $location, $q) {
+  .run(['$rootScope', '$location', '$q', 'barService', function($rootScope, $location, $q) {
+
     var path = function() { return $location.path();};
     $rootScope.$watch(path, function(newVal){
       $rootScope.activetab = newVal;
@@ -46,9 +48,15 @@ angular
     $rootScope.userlocation = q.promise;
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(pos) {
-        var pos = { 'lat' : pos.coords.latitude, 'lng' : pos.coords.longitude };
+        pos = { 'lat' : pos.coords.latitude, 'lng' : pos.coords.longitude };
         q.resolve(pos);
         $rootScope.userlocation = pos;
       });
     }
-  }]);
+  }])
+  .factory('barService', function() {
+    return new LeatherBars();
+  })
+  .factory('citationService', function() {
+    return new Citations();
+  });

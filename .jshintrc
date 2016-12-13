@@ -10,8 +10,11 @@
   "strict": true,
   "undef": true,
   "unused": true,
+  "sub": true,
   "globals": {
-    "angular": false
-    "LeatherBars": false
+    "angular": false,
+    "LeatherBars": false,
+    "Citations": false,
+    "google": false
   }
 }
