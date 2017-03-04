@@ -20,15 +20,18 @@ angular
     'uiGmapgoogle-maps'
   ])
   .config(function ($routeProvider, uiGmapGoogleMapApiProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      });
+    $routeProvider.when('/', {
+      templateUrl: 'views/main.html',
+      controller: 'MainCtrl',
+      controllerAs: 'main'
+    });
     $routeProvider.when('/bar/:barKey', {
       templateUrl: 'views/bar.html',
       controller: 'BarCtrl'
+    });
+    $routeProvider.when('/check', {
+      templateUrl: 'views/check.html',
+      controller: 'CheckCtrl'
     });
     $routeProvider.otherwise({
       redirectTo: '/'
@@ -40,9 +43,22 @@ angular
   })
   .run(['$rootScope', '$location', '$q', 'barService', function($rootScope, $location, $q) {
 
+    $rootScope.$on('$locationChangeStart', function(event, next) {
+      var checked = localStorage.getItem('verified');
+      if (next !== 'check' && !checked) {
+        $location.path('/check');
+      }
+      else if (next === 'check' && checked) {
+        $location.path('/');
+      }
+    });
+
     var path = function() { return $location.path();};
+    $rootScope.displayMap = 'none';
     $rootScope.$watch(path, function(newVal){
       $rootScope.activetab = newVal;
+      $rootScope.displayMap =  newVal === '/' ? 'large' : (newVal !== '/check' ? 'side' : 'none');
+      console.log($rootScope.displayMap, newVal);
     });
     var q = $q.defer();
     $rootScope.userlocation = q.promise;

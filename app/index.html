@@ -49,14 +49,14 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div ng-class="activetab == '/' ? 'col-md-12' : 'col-md-8'">
+        <div ng-class="displayMap == 'side' ?  'col-md-8' : 'col-md-12'">
           <div ng-view="" autoscroll="true"></div>
         </div>
-        <div class="leather-map__wrapper col-md-4 hidden-print" ng-if="activetab != '/'">
+        <div class="leather-map__wrapper col-md-4 hidden-print" ng-if="displayMap == 'side'">
           <leather-map display-list="true"></leather-map>
         </div>
       </div>
-      <div class="row"  ng-if="activetab == '/'">
+      <div class="row"  ng-if="displayMap == 'large'">
         <div class="leather-map__wrapper col-md-12">
           <leather-map display-list="false" map-zoom="15"></leather-map>
         </div>
@@ -103,6 +103,7 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/citation.js"></script>
+        <script src="scripts/controllers/check.js"></script>
         <script src="scripts/controllers/bar.js"></script>
         <script src="scripts/map.js"></script>
         <!-- endbuild -->
